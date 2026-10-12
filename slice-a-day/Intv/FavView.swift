@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct DashboardView: View {
-    let cards: [FavType] = FavType.mockComposition
+    @State private var cards: [FavType] = FavType.mockComposition
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 16) {
                     ForEach(cards) { item in
-                        ThumbnailCard(card: item)
+                        ThumbnailCard(card: item) {
+                            withAnimation {
+                                cards.removeAll { $0.id == item.id }
+                            }
+                        } 
                     }
                 }
-                .padding(.horizontal)
             }
             .navigationTitle("My Favorite")
         }

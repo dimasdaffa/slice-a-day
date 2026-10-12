@@ -9,37 +9,38 @@ import SwiftUI
 
 struct ThumbnailCard: View {
     let card: FavType
+    var onFavoriteTap: () -> Void
     
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(alignment: .top, spacing: 12) {
             Image(card.image.isEmpty ? "bitmap1" : card.image)
                 .resizable()
                 .frame(width: 178, height: 89)
                 .cornerRadius(12)
-            
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Text(card.title)
                         .font(.system(size: 16, weight: .bold))
                     Spacer()
-                    Image("heartlogo")
+                    Button{
+                        onFavoriteTap()
+                    } label: {
+                        Image("heartlogo")
                         .resizable()
-                        .frame(width: 20, height: 20)
+                        .frame(width: 30, height: 30)
+                    }
                 }
-                
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("\(card.releaseDate)")
-                        .font(.system(size: 14, weight: .semibold))
-                    Text(card.genre)
-                        .font(.system(size: 12))
-                }
+                Text("\(card.releaseDate)")
+                    .font(.system(size: 14, weight: .semibold))
+                Text(card.genre)
+                    .font(.system(size: 12))
             }
         }
-        .padding(.horizontal, 20)
+        .padding(.horizontal)
     }
 }
 
 #Preview {
-    ThumbnailCard(card: FavType.mockComposition[0])
+    ThumbnailCard(card: FavType.mockComposition[0], onFavoriteTap: {})
 }
 
